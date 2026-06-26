@@ -94,5 +94,5 @@ This project addresses the issue by providing a smart parking solution that allo
 *Bachelor of Computer Science Engineering*  
 *D. Y. Patil Agriculture and Technical University*
 
-* **GitHub Link:** [https://github.com/amulya192334/smart-parking-system-for-smart-cities](https://github.com/amulya192334/smart-parking-system-for-smart-cities)
-* **Demo Link:** [Google Drive Video](https://drive.google.com/file/d/1Wt4ETBiNhuGebMiOWAm9MhDK9dk-D22S/view?usp=drivesdk)
+* **GitHub Link:** [GitHub Link](https://github.com/omkarpatil3903-hub/smart-parking-system.git)
+* **Demo Link:** [Google Drive Video](https://drive.google.com/file/d/1GDo2QNxkLrvenYMnFzgqsAOyDLsOgb7e/view?usp=sharing)
