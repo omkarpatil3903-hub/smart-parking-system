@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Parking — QR Ticket</title>
+  <meta name="description" content="Your smart parking QR ticket with booking details.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text x='50' y='65' font-family='Arial' font-size='50' font-weight='bold' fill='white' text-anchor='middle'>SP</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ── Navigation ── -->
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <div class="navbar-logo">SP</div>
+        <div>
+          <div class="navbar-title">Smart Parking</div>
+          <div class="navbar-subtitle">QR Ticket</div>
+        </div>
+      </div>
+
+      <div class="navbar-nav">
+        <a href="index.html">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </a>
+        <a href="booking.html">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Book Slot
+        </a>
+      </div>
+
+      <div class="navbar-status offline">
+        <span class="status-dot"></span>
+        <span>IoT</span>
+      </div>
+    </nav>
+
+    <!-- ── Page ── -->
+    <main class="page">
+      <div class="page-header" style="text-align:center">
+        <h1>Parking Ticket</h1>
+        <p>Your booking has been confirmed. Show the QR code at entry.</p>
+      </div>
+
+      <div class="ticket-wrapper">
+        <div id="ticketCard" class="ticket">
+          <div class="ticket-header">
+            <h1>Smart Parking — Slot 01</h1>
+            <p>Confirmed Booking</p>
+          </div>
+
+          <div class="ticket-qr">
+            <div id="qrcode" class="qr-box">
+              <span class="qr-message">Generating QR...</span>
+            </div>
+          </div>
+
+          <div class="ticket-tear"></div>
+
+          <dl class="ticket-details">
+            <div class="ticket-field">
+              <dt>Booking ID</dt>
+              <dd id="ticketBookingId">-</dd>
+            </div>
+            <div class="ticket-field">
+              <dt>Name</dt>
+              <dd id="ticketName">-</dd>
+            </div>
+            <div class="ticket-field">
+              <dt>Vehicle Number</dt>
+              <dd id="ticketVehicle">-</dd>
+            </div>
+            <div class="ticket-field">
+              <dt>Slot Number</dt>
+              <dd>01</dd>
+            </div>
+            <div class="ticket-field">
+              <dt>Start Time</dt>
+              <dd id="ticketStart">-</dd>
+            </div>
+            <div class="ticket-field">
+              <dt>End Time</dt>
+              <dd id="ticketEnd">-</dd>
+            </div>
+            <div class="ticket-field amount" style="grid-column:1/-1; border-right:none">
+              <dt>Amount Paid</dt>
+              <dd id="ticketAmount">₹0</dd>
+            </div>
+          </dl>
+
+          <div class="ticket-actions">
+            <button id="downloadTicketBtn" class="btn btn-primary" type="button">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Ticket
+            </button>
+            <a class="btn" href="index.html">Back to Dashboard</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <span>Smart Parking System for Smart Cities</span>
+      <span>IoT Based Project</span>
+    </footer>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

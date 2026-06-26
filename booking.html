@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Parking — Book Slot</title>
+  <meta name="description" content="Book a parking slot online. Enter vehicle details, select time, and get instant QR ticket.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text x='50' y='65' font-family='Arial' font-size='50' font-weight='bold' fill='white' text-anchor='middle'>SP</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ── Navigation ── -->
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <div class="navbar-logo">SP</div>
+        <div>
+          <div class="navbar-title">Smart Parking</div>
+          <div class="navbar-subtitle">Book Slot 01</div>
+        </div>
+      </div>
+
+      <div class="navbar-nav">
+        <a href="index.html">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </a>
+        <a class="active" href="booking.html">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Book Slot
+        </a>
+      </div>
+
+      <div class="navbar-status offline">
+        <span class="status-dot"></span>
+        <span>IoT</span>
+      </div>
+    </nav>
+
+    <!-- ── Page ── -->
+    <main class="page">
+      <div class="page-header">
+        <h1>Reserve Parking Slot 01</h1>
+        <p>Fill in your details, review pricing, and confirm your booking</p>
+      </div>
+
+      <div class="booking-grid">
+        <!-- Booking Form -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Booking Form</span>
+          </div>
+          <div class="card-body">
+
+            <!-- Step Indicator -->
+            <div class="steps">
+              <div class="step active" data-step="1">
+                <span class="step-num">1</span>
+                Details
+              </div>
+              <div class="step-line"></div>
+              <div class="step" data-step="2">
+                <span class="step-num">2</span>
+                Pricing
+              </div>
+              <div class="step-line"></div>
+              <div class="step" data-step="3">
+                <span class="step-num">3</span>
+                Confirm
+              </div>
+            </div>
+
+            <form id="bookingForm">
+              <div class="form-group">
+                <label class="form-label" for="userName">Full Name</label>
+                <input id="userName" class="form-input" type="text" placeholder="Enter your full name" autocomplete="name" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="vehicleNumber">Vehicle Number</label>
+                <input id="vehicleNumber" class="form-input" type="text" placeholder="e.g. MH12AB1234" maxlength="15" required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="startTime">Start Time</label>
+                  <input id="startTime" class="form-input" type="datetime-local" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="endTime">End Time</label>
+                  <input id="endTime" class="form-input" type="datetime-local" required>
+                </div>
+              </div>
+
+              <div class="price-summary">
+                <div class="price-item">
+                  <div class="price-item-label">Rate</div>
+                  <div class="price-item-value">₹20/hr</div>
+                </div>
+                <div class="price-item">
+                  <div class="price-item-label">Duration</div>
+                  <div id="durationText" class="price-item-value">0 hr</div>
+                </div>
+                <div class="price-item total">
+                  <div class="price-item-label">Total</div>
+                  <div id="priceText" class="price-item-value">₹0</div>
+                </div>
+              </div>
+
+              <p id="formMessage" class="form-message" role="alert"></p>
+              <button id="confirmBookingBtn" class="btn btn-success btn-full btn-lg" type="submit">Confirm Booking</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="booking-sidebar" style="display:flex;flex-direction:column;gap:16px">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Slot Status</span>
+              <span class="card-badge live"><span class="badge-dot"></span> Live</span>
+            </div>
+            <div class="card-body">
+              <div id="bookingMiniSlot" class="mini-status state-free">
+                <span id="bookingStatusText">Checking...</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="detail-list">
+                <div class="detail-item">
+                  <span class="detail-key">Current Status</span>
+                  <span id="bookingLiveStatus" class="detail-val">Loading</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-key">Booking Rule</span>
+                  <span class="detail-val">Book only when free</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-key">Sensor Distance</span>
+                  <span id="bookingSensorDistance" class="detail-val">—</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <span>Smart Parking System for Smart Cities</span>
+      <span>IoT Based Project</span>
+    </footer>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

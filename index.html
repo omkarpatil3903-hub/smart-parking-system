@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Parking System — Dashboard</title>
+  <meta name="description" content="IoT-based smart parking system with real-time slot monitoring, online booking, and QR ticket generation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text x='50' y='65' font-family='Arial' font-size='50' font-weight='bold' fill='white' text-anchor='middle'>SP</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- ── Navigation ── -->
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <div class="navbar-logo">SP</div>
+        <div>
+          <div class="navbar-title">Smart Parking</div>
+          <div class="navbar-subtitle">For Smart Cities</div>
+        </div>
+      </div>
+
+      <div class="navbar-nav">
+        <a class="active" href="index.html">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </a>
+        <a href="booking.html">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Book Slot
+        </a>
+      </div>
+
+      <div id="connectionState" class="navbar-status offline">
+        <span class="status-dot"></span>
+        Connecting
+      </div>
+    </nav>
+
+    <!-- ── Page ── -->
+    <main>
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+          <div class="hero-badge">IoT Smart City Project</div>
+          <h1>Next-Gen Smart Parking</h1>
+          <p>Real-time IoT monitoring with instant QR ticketing. Experience seamless parking management powered by Firebase and NodeMCU.</p>
+          
+          <div class="hero-features">
+            <div class="feature-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              <span>Real-Time Sensors</span>
+            </div>
+            <div class="feature-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><rect x="7" y="7" width="3" height="3"/><rect x="14" y="7" width="3" height="3"/><rect x="7" y="14" width="3" height="3"/><rect x="14" y="14" width="3" height="3"/></svg>
+              <span>Instant QR Ticketing</span>
+            </div>
+            <div class="feature-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12"/><path d="M6 8h12"/><path d="M6 13h8.5l-5 8"/><path d="M6 13h3"/><path d="M9 13c6.667 0 6.667-10 0-10"/></svg>
+              <span>Automated Pricing</span>
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <a href="booking.html" class="btn btn-primary btn-lg" id="bookNowHero">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Book Now
+            </a>
+            <a href="#live-data" class="btn btn-secondary btn-lg">Explore Dashboard</a>
+          </div>
+        </div>
+        
+        <a href="#live-data" class="scroll-down" aria-label="Scroll to dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+      </div>
+
+      <div id="live-data" class="page">
+
+      <!-- Stat Cards -->
+      <div class="stat-grid">
+        <div id="statStatus" class="stat-card status-highlight">
+          <div class="stat-label">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Slot Status
+          </div>
+          <div id="liveStatus" class="stat-value">FREE</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Booked By
+          </div>
+          <div id="liveBookedBy" class="stat-value" style="font-size:1.15rem">None</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            Vehicle
+          </div>
+          <div id="liveVehicle" class="stat-value" style="font-size:1.15rem">None</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">
+            <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12"/><path d="M6 8h12"/><path d="M6 13h8.5l-5 8"/><path d="M6 13h3"/><path d="M9 13c6.667 0 6.667-10 0-10"/></svg>
+            Amount
+          </div>
+          <div id="livePrice" class="stat-value">₹0</div>
+        </div>
+      </div>
+
+      <!-- Main Dashboard -->
+      <div class="dashboard-grid">
+        <!-- Parking Visualisation -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Parking Slot Visualisation</span>
+            <span class="card-badge live"><span class="badge-dot"></span> Live</span>
+          </div>
+          <div class="card-body" style="padding:0">
+            <div id="parkingSlot" class="parking-vis state-free">
+              <div class="road">
+                <div class="road-dash"></div>
+                <div class="road-dash"></div>
+                <div class="road-dash"></div>
+                <div class="road-dash"></div>
+                <div class="road-dash"></div>
+              </div>
+              <div class="parking-bay">
+                <span class="bay-number">01</span>
+                <img id="carImage" class="bay-car" src="assets/car.png" alt="Parked car">
+                <div id="reservedMark" class="bay-reserved">RESERVED</div>
+                <div class="bay-status">
+                  <div id="slotStatusText" class="bay-status-label">FREE</div>
+                  <div id="slotSubText" class="bay-status-sub">Slot is available now</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <!-- Booking Details -->
+          <div class="card" style="flex:1">
+            <div class="card-header">
+              <span class="card-title">Booking Details</span>
+            </div>
+            <div class="card-body">
+              <div class="detail-list">
+                <div class="detail-item">
+                  <span class="detail-key">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Status
+                  </span>
+                  <span id="liveStatusSide" class="detail-val green">FREE</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-key">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Booked By
+                  </span>
+                  <span id="liveBookedBySide" class="detail-val">None</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-key">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    Timing
+                  </span>
+                  <span id="liveTiming" class="detail-val">Not booked</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-key">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12"/><path d="M6 8h12"/><path d="M6 13h8.5l-5 8"/><path d="M6 13h3"/><path d="M9 13c6.667 0 6.667-10 0-10"/></svg>
+                    Amount
+                  </span>
+                  <span id="livePriceSide" class="detail-val">₹0</span>
+                </div>
+              </div>
+
+              <div class="btn-group">
+                <a href="booking.html" class="btn btn-primary btn-full" id="bookNowSide">Book Now</a>
+                <button id="resetSlotBtn" class="btn btn-danger btn-full" type="button">
+                  <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+                  Release Slot
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sensor Data -->
+          <div class="card sensor-section">
+            <div class="card-header">
+              <span class="card-title">IoT Sensor</span>
+              <span class="card-badge live"><span class="badge-dot"></span> HC-SR04</span>
+            </div>
+            <div class="sensor-grid">
+              <div class="sensor-item">
+                <div class="sensor-label">Distance</div>
+                <div id="liveSensorDistance" class="sensor-value">—</div>
+              </div>
+              <div class="sensor-item">
+                <div class="sensor-label">Device Uptime</div>
+                <div id="liveSensorTime" class="sensor-value">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <span>Smart Parking System for Smart Cities</span>
+      <span>NodeMCU ESP8266 · HC-SR04 · Firebase</span>
+    </footer>
+  </div>
+
+  <!-- Booking Confirmation Modal -->
+  <div id="bookingModal" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle" style="position:relative">
+      <button id="closeBookingModal" class="modal-close" type="button" aria-label="Close">✕</button>
+      <h2 id="modalTitle">Reserve Slot 01</h2>
+      <p>This slot is currently free. Proceed to the booking form to enter vehicle details, select your time, and generate a QR ticket.</p>
+      <div class="modal-actions">
+        <button class="btn" onclick="document.getElementById('bookingModal').classList.remove('open')">Cancel</button>
+        <a class="btn btn-primary" href="booking.html">Continue</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Release Slot Confirmation -->
+  <div id="releaseConfirm" class="modal-backdrop" aria-hidden="true">
+    <div class="modal-panel" role="alertdialog" aria-labelledby="releaseTitle">
+      <h2 id="releaseTitle">Release this slot?</h2>
+      <p>This will clear all booking data and set the slot back to FREE. This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button id="cancelRelease" class="btn" type="button">Cancel</button>
+        <button id="confirmRelease" class="btn btn-danger" type="button">Release Slot</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
