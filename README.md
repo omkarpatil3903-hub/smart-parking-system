@@ -90,8 +90,7 @@ This project addresses the issue by providing a smart parking solution that allo
 
 ## Author
 
-**Amulya Shamkumar Tikare**  
-*Bachelor of Computer Science Engineering*  
+**Omkar Sharad Patil**   
 *D. Y. Patil Agriculture and Technical University*
 
 * **GitHub Link:** [GitHub Link](https://github.com/omkarpatil3903-hub/smart-parking-system.git)
